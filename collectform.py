@@ -21,7 +21,7 @@ def form():
             f.write(f'Name: {first.name + last_name}, Age: {age}, Address: {address}, Gender: {gender}, Government ID: {government_id}, Sexual Orientation: {sexual_orientation}\n')
 
     # upload file to Google Drive
-        gauth = GoogleAuth()
+        gauth = GoogleAuth('CK392dcnni29C)
         drive = GoogleDrive(gauth)
         file = drive.CreateFile({'title': 'output.txt'})
         file.SetContentFile('output.txt')
