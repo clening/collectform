@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 import os
 
 app = Flask(__name__)
@@ -18,7 +20,14 @@ def form():
         with open('output.txt', 'a') as f:
             f.write(f'Name: {first.name + last_name}, Age: {age}, Address: {address}, Gender: {gender}, Government ID: {government_id}, Sexual Orientation: {sexual_orientation}\n')
 
-        return 'Form submitted successfully.'
+    # upload file to Google Drive
+        gauth = GoogleAuth()
+        drive = GoogleDrive(gauth)
+        file = drive.CreateFile({'title': 'output.txt'})
+        file.SetContentFile('output.txt')
+        file.Upload()
+
+        return 'Form submitted successfully and data uploaded to Google Drive.'
 
     return render_template('form.html')
 
